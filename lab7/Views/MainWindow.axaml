@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:lab7.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:m="using:lab7.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="lab7.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="lab7">
+	<Window.Styles>
+		<Style Selector="TextBlock.t">
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="Border.b">
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="VerticalAlignment" Value="Stretch"/>
+		</Style>
+	</Window.Styles>
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+	<Grid RowDefinitions="*,10*">
+		<DataGrid Name="DG" Grid.Row="1" Items="{Binding Items}">
+			<DataGrid.Columns>
+
+				<DataGridTextColumn IsReadOnly="True" Header="First Name" Binding="{Binding FirstName}"/>
+				<DataGridTextColumn IsReadOnly="True" Header="Second Name" Binding="{Binding SecondName}"/>
+				<DataGridTextColumn IsReadOnly="True" Header="Patronymic" Binding="{Binding Patronymic}"/>
+				<DataGridTextColumn Header="Control 1" Binding="{Binding [0]}"/>
+				<DataGridTextColumn Header="Control 2" Binding="{Binding [1]}"/>
+				<DataGridTextColumn Header="Control 3" Binding="{Binding [2]}"/>
+				<DataGridTextColumn Header="Control 4" Binding="{Binding [3]}"/>
+				<DataGridTextColumn Header="Control 5" Binding="{Binding [4]}"/>
+				<DataGridTemplateColumn Header="Average" IsReadOnly="True" SortMemberPath="Average" CanUserSort="True">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate DataType="m:Student">
+							<Border Classes="b" Background="{Binding Brush}">
+								<TextBlock Classes="t" Text="{Binding Average}"/>
+							</Border>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridCheckBoxColumn Header="Check" Binding="{Binding BoxChecked}"/>
+			</DataGrid.Columns>
+
+		</DataGrid>
+
+	</Grid>
+
+</Window>
