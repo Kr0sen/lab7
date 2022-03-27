@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 
 namespace lab7.Models
 {
-    [Serializable]
     public class Student : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
