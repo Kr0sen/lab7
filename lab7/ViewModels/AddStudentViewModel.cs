@@ -38,7 +38,7 @@ namespace lab7.ViewModels
                 !string.IsNullOrEmpty(studentToReturn.SecondName);
             for (int i = 0; i < 5; i++)
             {
-                if (!Int32.TryParse(studentToReturn[i], out x))
+                if (!Int32.TryParse(studentToReturn[i], out x) && studentToReturn[i].Length > 1)
                 {
                     Enable = false;
                     break;

@@ -2,6 +2,8 @@
 using Avalonia.Media;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace lab7.Models
 {
@@ -78,7 +80,6 @@ namespace lab7.Models
                 resetAverage();
             }
         }
-
         public string this[int i]
         {
             get
@@ -88,17 +89,22 @@ namespace lab7.Models
             set
             {
                 int x;
-                if (Int32.TryParse(value, out x))
-                {
-                    if (x > -1 && x < 3)
+                if (value.Length < 2)
+                    if (Int32.TryParse(value, out x))
                     {
-                        control[i] = value;
+                        if (x > -1 && x < 3)
+                        {
+                            control[i] = value;
+                        }
+                        else
+                        {
+                            control[i] = "#ERROR";
+                        }
                     }
                     else
                     {
                         control[i] = "#ERROR";
                     }
-                }
                 else
                 {
                     control[i] = "#ERROR";
