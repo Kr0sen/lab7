@@ -98,6 +98,11 @@ namespace lab7.Views
                             new string[5] { sr.ReadLine(), sr.ReadLine(), sr.ReadLine(),
                                 sr.ReadLine(), sr.ReadLine() }));
                     }
+                    foreach (var item in items)
+                    {
+                        item.PropertyChanged +=
+                            (this.DataContext as MainWindowViewModel).ContentCollectionChanged;
+                    }
                 }
                 (this.DataContext as MainWindowViewModel).resetAverage();
             }
