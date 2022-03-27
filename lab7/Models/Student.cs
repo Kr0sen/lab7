@@ -1,10 +1,18 @@
 ﻿using System;
 using Avalonia.Media;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace lab7.Models
 {
-    public class Student
+    [Serializable]
+    public class Student : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public Student(string fn, string sn, string p, string[] control)
         {
             FirstName = fn;
@@ -18,56 +26,57 @@ namespace lab7.Models
         {
             BoxChecked = check;
         }
+        public Student(Student old)
+        {
+            FirstName = old.FirstName;
+            SecondName = old.SecondName;
+            Patronymic = old.Patronymic;
+            Control = old.Control;
+            BoxChecked = old.BoxChecked;
+            resetAverage();
+        }
 
         string firstName;
         public string FirstName
         {
-            get
-            {
-                return firstName;
-            }
+            get { return firstName; }
             set
             {
                 firstName = value;
+                NotifyPropertyChanged();
             }
         }
 
         string secondName;
         public string SecondName
         {
-            get
-            {
-                return secondName;
-            }
+            get { return secondName; }
             set
             {
                 secondName = value;
+                NotifyPropertyChanged();
             }
         }
 
         string patronymic;
         public string Patronymic
         {
-            get
-            {
-                return patronymic;
-            }
+            get { return patronymic; }
             set
             {
                 patronymic = value;
+                NotifyPropertyChanged();
             }
         }
 
         string[] control = new string[5];
         public string[] Control
         {
-            get
-            {
-                return control;
-            }
+            get { return control; }
             set
             {
                 control = value;
+                resetAverage();
             }
         }
 
@@ -98,23 +107,14 @@ namespace lab7.Models
                 resetAverage();
             }
         }
-
+        ISolidColorBrush brush;
         public ISolidColorBrush Brush
         {
-            get
+            get { return brush; }
+            set
             {
-                double x;
-                if (Double.TryParse(average, out x))
-                {
-                    if (x < 1) return Brushes.Red;
-                    if (x >= 1.5) return Brushes.Green;
-                    if (x >= 1 && x < 1.5) return Brushes.Yellow;
-                    return Brushes.Purple;
-                }
-                else
-                {
-                    return Brushes.White;
-                }
+                brush = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -122,7 +122,11 @@ namespace lab7.Models
         public bool BoxChecked
         {
             get { return boxChecked; }
-            set { boxChecked = value; }
+            set
+            {
+                boxChecked = value;
+                NotifyPropertyChanged();
+            }
         }
 
         string average;
@@ -135,6 +139,18 @@ namespace lab7.Models
             set
             {
                 average = value;
+                double x;
+                if (Double.TryParse(average, out x))
+                {
+                    if (x < 1) Brush = Brushes.Red;
+                    if (x >= 1.5) Brush = Brushes.Green;
+                    if (x >= 1 && x < 1.5) Brush = Brushes.Yellow;
+                }
+                else
+                {
+                    Brush = Brushes.White;
+                }
+                NotifyPropertyChanged();
             }
         }
 
