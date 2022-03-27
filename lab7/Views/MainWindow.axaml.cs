@@ -29,6 +29,7 @@ namespace lab7.Views
             {
                 st.PropertyChanged += context.ContentCollectionChanged;
                 context.Items.Add(st);
+                context.resetAverage();
             }
         }
         private async void ClickEventDelete(object? sender, RoutedEventArgs e)
@@ -49,7 +50,7 @@ namespace lab7.Views
                 Title = "Save file",
                 Filters = new List<FileDialogFilter>()
             };
-            taskPath.Filters.Add(new FileDialogFilter() { Name = "txt", Extensions = { "txt" } });
+            taskPath.Filters.Add(new FileDialogFilter() { Name = "Текстовый файл (.txt)", Extensions = { "txt" } });
 
             path = await taskPath.ShowAsync((Window)this.VisualRoot);
             if (path is not null)
